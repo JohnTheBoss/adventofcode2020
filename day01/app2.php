@@ -3,7 +3,6 @@
 $handle = fopen("input.txt", "r");
 $numbers = [];
 
-$i = 0;
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         $numbers[] = intval($line);
