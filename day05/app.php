@@ -34,12 +34,28 @@ function parseSeat($seat){
 }
 
 $lines = file(__DIR__ . '/input.txt', FILE_IGNORE_NEW_LINES);
+$planeSeatsId = [];
 $maxSeatID = 0;
 foreach($lines as $seat){
-    $seatId= parseSeat($seat)['seatId'];
-    if($maxSeatID < $seatId){
-        $maxSeatID = $seatId;
+    $current = parseSeat($seat)['seatId'];
+    $planeSeatsId[] = $current;
+    if($maxSeatID < $current){
+        $maxSeatID = $current;
     }
 }
 
 echo "5a: " . $maxSeatID . "\n"; 
+
+sort($planeSeatsId);
+$mySeat = 0;
+$start = $planeSeatsId[0];
+
+for($i = 1; $i < count($planeSeatsId) -1; $i++){
+    $current = $planeSeatsId[$i];
+    $next = $planeSeatsId[$i+1];
+
+    if($current+1 != $next && $current+2 == $next){
+        echo "5b: " . ($current+1);
+        return;
+    }
+}
