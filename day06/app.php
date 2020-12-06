@@ -8,16 +8,26 @@ function getYesGroupAnswersNum($groupAnswers){
         }
     }
 
-    return count($yesAnsers);
+    $allYes = 0;
+    foreach ($yesAnsers as $answer) {
+        if($answer == count($groupAnswers)){
+            $allYes++;
+        }
+    }
+
+    return [count($yesAnsers), $allYes];
 }
 
 $handle = fopen("input.txt", "r");
 if ($handle) {
     $groupAnswers = [];
     $sumYes = 0;
+    $allYes = 0;
     while (($line = fgets($handle)) !== false) {
         if($line == "\r\n"){
-            $sumYes +=  getYesGroupAnswersNum($groupAnswers);
+            $tmp = getYesGroupAnswersNum($groupAnswers);
+            $sumYes +=  $tmp[0];
+            $allYes += $tmp[1];
             $groupAnswers = [];
         } else {
            $groupAnswers[] = str_replace("\r\n", '', $line);
@@ -25,8 +35,11 @@ if ($handle) {
     }
     fclose($handle);
 
-    $sumYes +=  getYesGroupAnswersNum($groupAnswers);
+    $tmp = getYesGroupAnswersNum($groupAnswers);
+    $sumYes +=  $tmp[0];
+    $allYes += $tmp[1];
     $groupAnswers = []; 
 }
 
 echo "day 06a is ". $sumYes . "\n";
+echo "day 06b is ". $allYes . "\n";
