@@ -58,3 +58,18 @@ foreach ($unpackedBags as $bagColor => $bag) {
 }
 
 echo "7a: " . count($bagColorContainsShinyGold) . "\n";
+
+function countSubBag($bagType)
+{
+    global $bags;
+    $number = 1;
+
+    foreach ($bags[$bagType] as $bag) {
+        $number += $bag['number'] * countSubBag($bag['name']);
+    }
+
+    return $number;
+}
+
+
+echo "7b: " . (countSubBag("shiny gold") - 1);
